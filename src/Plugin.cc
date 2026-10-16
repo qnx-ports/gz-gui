@@ -425,7 +425,7 @@ QQuickItem *Plugin::CardItem() const
     return this->dataPtr->cardItem;
 
   // Instantiate a card
-  std::string qmlFile(":qml/GzCard.qml");
+  std::string qmlFile(":/qml/GzCard.qml");
   QQmlComponent cardComp(App()->Engine(), QString::fromStdString(qmlFile));
   auto *cardItem = qobject_cast<QQuickItem *>(cardComp.create());
   if (!cardItem)

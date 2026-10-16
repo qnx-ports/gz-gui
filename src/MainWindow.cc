@@ -101,7 +101,7 @@ MainWindow::MainWindow()
   App()->Engine()->rootContext()->setContextProperty("_MainWindow", this);
 
   // Load QML and keep pointer to generated QQuickWindow
-  std::string qmlFile("qrc:qml/Main.qml");
+  std::string qmlFile("qrc:/qml/Main.qml");
   App()->Engine()->load(QUrl(QString::fromStdString(qmlFile)));
 
   this->dataPtr->quickWindow = qobject_cast<QQuickWindow *>(

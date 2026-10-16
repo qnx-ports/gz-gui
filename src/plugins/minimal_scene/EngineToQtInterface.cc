@@ -176,7 +176,7 @@ GLuint EngineToQtInterface::TextureId(gz::rendering::CameraPtr &_camera)
     glFuncs->glTexSubImage2D(
       GL_TEXTURE_2D, 0, 0, 0, GLsizei(this->dataPtr->fallbackImage->Width()),
       GLsizei(this->dataPtr->fallbackImage->Height()), GL_RGBA,
-      GL_UNSIGNED_INT_8_8_8_8_REV, this->dataPtr->fallbackImage->Data());
+      GL_UNSIGNED_BYTE, this->dataPtr->fallbackImage->Data());
 
     return this->dataPtr->fallbackTexture;
   }
