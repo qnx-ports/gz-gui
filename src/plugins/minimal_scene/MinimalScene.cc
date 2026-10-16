@@ -58,6 +58,11 @@
 #  include <gz/rendering/RenderEngineVulkanExternalDeviceStructs.hh>
 #endif  // GZ_GUI_HAVE_VULKAN
 
+#ifdef __QNX__
+#include <QGuiApplication>
+#include <qnativeinterface.h>
+#endif
+
 Q_DECLARE_OPAQUE_POINTER(gz::gui::plugins::RenderSync*)
 
 namespace gz::gui::plugins
@@ -721,6 +726,24 @@ std::string GzRenderer::Initialize(RenderThreadRhi &_rhi)
         std::to_string(reinterpret_cast<uintptr_t>(&externalInstance));
       this->dataPtr->rhiParams["external_device"] =
         std::to_string(reinterpret_cast<uintptr_t>(&externalDevice));
+    }
+#endif
+
+#ifdef __QNX__
+    auto *qt_wl_context = QGuiApplication::instance()->nativeInterface<QNativeInterface::QWaylandApplication>();
+    if (qt_wl_context == nullptr) {
+      gzwarn << "Failed to retrieve qt wayland context!! Creating a render "
+             << "engine on QNX without wayland." << std::endl;
+    } else {
+      this->dataPtr->rhiParams["waylandDisplay"] = std::to_string(reinterpret_cast<size_t>(qt_wl_context->display());
+    }
+
+    auto *qt_wl_window_context = quickWindow->nativeInterface<QNativeInterface::QWaylandWindow>();
+    if (qt_wl_window_context == nullptr) {
+      gzwarn << "Failed to retrieve qt wayland window context!! Creating a "
+             << "render engine on QNX without wayland." << std::endl;
+    } else {
+      this->dataPtr->rhiParams["waylandSurface"] = std::to_string(reinterpret_cast<size_t>(qt_wl_window_context->surface());
     }
 #endif
 
