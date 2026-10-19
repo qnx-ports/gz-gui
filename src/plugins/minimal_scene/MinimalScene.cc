@@ -61,6 +61,8 @@
 #ifdef __QNX__
 #include <QGuiApplication>
 #include <qnativeinterface.h>
+#include <qpa/qplatformnativeinterface.h>
+#include <qpa/qplatformwindow_p.h>
 #endif
 
 Q_DECLARE_OPAQUE_POINTER(gz::gui::plugins::RenderSync*)
@@ -730,20 +732,20 @@ std::string GzRenderer::Initialize(RenderThreadRhi &_rhi)
 #endif
 
 #ifdef __QNX__
-    auto *qt_wl_context = QGuiApplication::instance()->nativeInterface<QNativeInterface::QWaylandApplication>();
+    auto *qt_wl_context = QGuiApplication::platformNativeInterface();
     if (qt_wl_context == nullptr) {
       gzwarn << "Failed to retrieve qt wayland context!! Creating a render "
              << "engine on QNX without wayland." << std::endl;
     } else {
-      this->dataPtr->rhiParams["waylandDisplay"] = std::to_string(reinterpret_cast<size_t>(qt_wl_context->display());
+      this->dataPtr->rhiParams["waylandDisplay"] = std::to_string(reinterpret_cast<size_t>(qt_wl_context->nativeResourceForIntegration("display")));
     }
 
-    auto *qt_wl_window_context = quickWindow->nativeInterface<QNativeInterface::QWaylandWindow>();
+    auto *qt_wl_window_context = quickWindow->nativeInterface<QNativeInterface::Private::QWaylandWindow>();
     if (qt_wl_window_context == nullptr) {
       gzwarn << "Failed to retrieve qt wayland window context!! Creating a "
              << "render engine on QNX without wayland." << std::endl;
     } else {
-      this->dataPtr->rhiParams["waylandSurface"] = std::to_string(reinterpret_cast<size_t>(qt_wl_window_context->surface());
+      this->dataPtr->rhiParams["waylandSurface"] = std::to_string(reinterpret_cast<size_t>(qt_wl_window_context->surface()));
     }
 #endif
 

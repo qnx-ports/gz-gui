@@ -51,6 +51,8 @@ target_link_libraries(${PROJECT_LIBRARY_TARGET_NAME}
     gz-plugin::loader
     gz-transport::gz-transport
     Qt::Core
+    Qt::Gui
+    Qt::GuiPrivate
     Qt::Qml
     Qt::Quick
     Qt::QuickControls2
