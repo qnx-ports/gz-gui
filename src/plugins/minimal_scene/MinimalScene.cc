@@ -737,15 +737,8 @@ std::string GzRenderer::Initialize(RenderThreadRhi &_rhi)
       gzwarn << "Failed to retrieve qt wayland context!! Creating a render "
              << "engine on QNX without wayland." << std::endl;
     } else {
-      this->dataPtr->rhiParams["waylandDisplay"] = std::to_string(reinterpret_cast<size_t>(qt_wl_context->nativeResourceForIntegration("display")));
-    }
-
-    auto *qt_wl_window_context = quickWindow->nativeInterface<QNativeInterface::Private::QWaylandWindow>();
-    if (qt_wl_window_context == nullptr) {
-      gzwarn << "Failed to retrieve qt wayland window context!! Creating a "
-             << "render engine on QNX without wayland." << std::endl;
-    } else {
-      this->dataPtr->rhiParams["waylandSurface"] = std::to_string(reinterpret_cast<size_t>(qt_wl_window_context->surface()));
+      this->dataPtr->rhiParams["waylandDisplay"] = std::to_string(reinterpret_cast<size_t>(qt_wl_context->nativeResourceForWindow("display", quickWindow)));
+      this->dataPtr->rhiParams["waylandSurface"] = std::to_string(reinterpret_cast<size_t>(qt_wl_context->nativeResourceForWindow("surface", quickWindow)));
     }
 #endif
 
