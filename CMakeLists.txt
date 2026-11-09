@@ -84,11 +84,12 @@ set(GZ_TOOLS_VER 2)
 gz_find_package (Qt5
   COMPONENTS
     Core
+    Gui
     Quick
     QuickControls2
     Widgets
   REQUIRED
-  PKGCONFIG "Qt5Core Qt5Quick Qt5QuickControls2 Qt5Widgets"
+  PKGCONFIG "Qt5Core Qt5Gui Qt5Quick Qt5QuickControls2 Qt5Widgets"
 )
 
 set(GZ_GUI_PLUGIN_RELATIVE_INSTALL_DIR

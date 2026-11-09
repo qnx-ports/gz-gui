@@ -68,11 +68,17 @@ target_link_libraries(${PROJECT_LIBRARY_TARGET_NAME}
     gz-plugin${GZ_PLUGIN_VER}::loader
     gz-transport${GZ_TRANSPORT_VER}::gz-transport${GZ_TRANSPORT_VER}
     ${Qt5Core_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
     ${Qt5Qml_LIBRARIES}
     ${Qt5Quick_LIBRARIES}
     ${Qt5QuickControls2_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
     TINYXML2::TINYXML2
+)
+
+target_include_directories(${PROJECT_LIBRARY_TARGET_NAME}
+  PRIVATE
+    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
 
 target_compile_definitions(${PROJECT_LIBRARY_TARGET_NAME} PRIVATE
