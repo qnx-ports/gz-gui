@@ -33,6 +33,10 @@ gz_gui_add_plugin(MinimalScene
    ${PROJECT_LINK_LIBS}
 )
 
+if(CMAKE_SYSTEM_NAME STREQUAL "QNX")
+  target_include_directories(MinimalScene PRIVATE ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+endif()
+
 # Enable ARC on selected source files
 if (APPLE)
   set_source_files_properties(
